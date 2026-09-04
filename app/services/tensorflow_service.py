@@ -1,6 +1,5 @@
 from pathlib import Path
 
-import tensorflow as tf
 import numpy as np
 
 
@@ -9,7 +8,7 @@ def convert_to_saved_model(
     output_dir: Path
 ):
 
-    # Lazy import
+    import tensorflow as tf
     from onnx2tf import convert
 
     convert(
@@ -38,6 +37,8 @@ def quantize_to_int8(
     output_file: Path,
     input_shape=(1, 3, 224, 224),
 ):
+
+    import tensorflow as tf
 
     converter = (
         tf.lite.TFLiteConverter
