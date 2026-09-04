@@ -8,7 +8,6 @@ def convert_to_saved_model(
     output_dir: Path
 ):
 
-    import tensorflow as tf
     from onnx2tf import convert
 
     convert(

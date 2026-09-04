@@ -2,9 +2,7 @@ from pathlib import Path
 
 import torch
 
-from app.services.pytorch_service import (
-    load_pytorch_model
-)
+from app.services.pytorch_service import load_pytorch_model
 
 
 def export_to_onnx(

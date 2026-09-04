@@ -1,35 +1,30 @@
+from pathlib import Path
+
 from fastapi import (
     APIRouter,
-    UploadFile,
     BackgroundTasks,
     File,
     HTTPException,
     Query,
+    UploadFile,
 )
-
 from fastapi.responses import FileResponse
 
-from pathlib import Path
-
+from app.config import get_settings
+from app.models.schemas import ConversionAccepted, JobResponse
+from app.services.conversion_service import run_conversion
 from app.services.job_service import (
-    generate_job_id,
     create_job,
+    generate_job_id,
     get_job,
     update_job,
 )
-
-from app.services.conversion_service import (
-    run_conversion
-)
-
+from app.services.model_service import build_model
 from app.storage.file_manager import (
     ensure_directories,
     safe_filename,
     save_uploaded_file,
 )
-from app.config import get_settings
-from app.models.schemas import ConversionAccepted, JobResponse
-from app.services.model_service import build_model
 
 router = APIRouter()
 
@@ -48,7 +43,7 @@ def parse_input_shape(value: str) -> tuple[int, ...]:
              summary="Start a PyTorch checkpoint conversion")
 async def convert(
     background_tasks: BackgroundTasks,
-    model_file: UploadFile = File(..., description="A .pth or .pt PyTorch module/checkpoint"),
+    model_file: UploadFile = File(..., description="A .pth or .pt PyTorch module/checkpoint"),  # noqa: B008
     architecture: str = Query(..., description="Supported torchvision architecture"),
     input_shape: str = Query("1,3,224,224", description="N,C,H,W input shape"),
 ):

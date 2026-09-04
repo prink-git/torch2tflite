@@ -1,10 +1,9 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
 from fastapi import UploadFile
 
 from app.config import Settings, get_settings
-
 
 _SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]")
 

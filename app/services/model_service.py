@@ -1,10 +1,10 @@
 import torch
 from torchvision.models import (
+    efficientnet_b0,
+    mobilenet_v2,
     resnet18,
     resnet34,
     resnet50,
-    mobilenet_v2,
-    efficientnet_b0
 )
 
 
@@ -45,7 +45,7 @@ def load_checkpoint(model_path, architecture: str):
         loaded = checkpoint
     else:
         if not isinstance(checkpoint, dict):
-            raise ValueError("Checkpoint must be a torch.nn.Module or a state_dict dictionary")
+            raise TypeError("Checkpoint must be a torch.nn.Module or a state_dict dictionary")
         state_dict = checkpoint.get("state_dict", checkpoint.get("model_state_dict", checkpoint.get("model")))
         if state_dict is None:
             state_dict = checkpoint

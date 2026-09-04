@@ -1,26 +1,10 @@
-from pathlib import Path
 
-from app.services.job_service import (
-    update_job
-)
-
-from app.services.onnx_service import (
-    export_to_onnx
-)
-
-from app.services.onnx_validator import (
-    validate_onnx
-)
+from app.services.job_service import update_job
+from app.services.onnx_service import export_to_onnx
+from app.services.onnx_validator import validate_onnx
 from app.services.pytorch_service import load_pytorch_model
-
-from app.services.tensorflow_service import (
-    convert_to_saved_model,
-    quantize_to_int8
-)
-
-from app.services.report_service import (
-    generate_report
-)
+from app.services.report_service import generate_report
+from app.services.tensorflow_service import convert_to_saved_model, quantize_to_int8
 
 
 def run_conversion(
@@ -108,10 +92,10 @@ def run_conversion(
             100
         )
 
-    except Exception as e:
+    except Exception as exc:  # noqa: BLE001
 
         update_job(
             job_id,
-            f"failed: {str(e)}",
+            f"failed: {exc!s}",
             0
         )

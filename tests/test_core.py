@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 import torch
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 from app.api.routes import parse_input_shape
@@ -24,7 +25,7 @@ def test_filename_is_confined_to_a_basename():
 
 def test_shape_validation():
     assert parse_input_shape("1,3,32,32") == (1, 3, 32, 32)
-    with pytest.raises(Exception):
+    with pytest.raises(HTTPException):
         parse_input_shape("1,3,32")
 
 
